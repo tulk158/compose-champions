@@ -1,0 +1,14 @@
+services:
+    apache:
+        image: httpd:2.4
+        container_name: apache
+        ports:
+            - 8000:80
+        volumes:
+            - ./index.html:/usr/local/apache2/htdocs/index.html
+    curl:
+        image: curlimages/curl
+        container_name: curl
+        command: sh -c "while :; do curl -s "http://apache" 2>&1; echo; sleep 1; done"
+        depends_on:
+            - apache
